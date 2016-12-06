@@ -62,10 +62,7 @@ public class FIOAlerts {
 	 * @return the title for the alert. Null if index doesn't exist.
 	 */
 	public String getAlertTitle(int index){
-		if(index < 0 || index >= alert.length )
-			return null;
-		else
-			return alert[index].getTitle();
+		return (index < 0 || index >= alert.length ) ? null : alert[index].getTitle();
 	}
 	
 	/**
@@ -114,10 +111,7 @@ public class FIOAlerts {
 	 * @return the description for the alert. Null if index doesn't exist.
 	 */
 	public String getAlertDescription(int index){
-		if(index < 0 || index >= alert.length )
-			return null;
-		else
-			return alert[index].getDescription();
+		return (index < 0 || index >= alert.length ) ? null :  alert[index].getDescription();
 	}
 	
 	/**
@@ -128,10 +122,7 @@ public class FIOAlerts {
 	 * @return the uri for the alert. Null if index doesn't exist.
 	 */
 	public String getAlertURI(int index){
-		if(index < 0 || index >= alert.length )
-			return null;
-		else
-			return alert[index].getUri();
+		return (index < 0 || index >= alert.length ) ? null : alert[index].getUri();
 	}
 	
 	/**
