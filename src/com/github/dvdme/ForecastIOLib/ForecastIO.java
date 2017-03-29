@@ -29,8 +29,8 @@ public class ForecastIO {
 	private String excludeURL;
 	private String langURL;
 	private boolean extend;
-    private int connectTimeout = 30000;
-    private int readTimeout = 30000;
+    	private int connectTimeout = 30000;
+    	private int readTimeout = 30000;
 
 	private String Cache_Control;
 	private String Expires;
@@ -283,12 +283,7 @@ public class ForecastIO {
 	 * @param PROXYPORT port of the proxy to use (e.g. 8080)
 	 */
 	public void setHTTPProxy(String PROXYNAME, int PROXYPORT) {
-		if (PROXYNAME == null) {
-			this.proxy_to_use = null;
-		}
-		else {
-			this.proxy_to_use = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(PROXYNAME, PROXYPORT));
-		}
+		this.proxy_to_use = (PROXYNAME == null) ? null : new Proxy(Proxy.Type.HTTP, new InetSocketAddress(PROXYNAME, PROXYPORT));
 	}
 
 	/**
@@ -459,10 +454,7 @@ public class ForecastIO {
 	 * @return true or false
 	 */
 	public boolean hasCurrently(){
-		if(this.currently == null)
-			return false;
-		else
-			return true;
+		return this.currently != null;
 	}
 
 	/**
@@ -470,10 +462,7 @@ public class ForecastIO {
 	 * @return true or false
 	 */
 	public boolean hasMinutely(){
-		if(this.minutely == null)
-			return false;
-		else
-			return true;
+		return this.minutely != null;
 	}
 
 	/**
@@ -481,10 +470,7 @@ public class ForecastIO {
 	 * @return true or false
 	 */
 	public boolean hasHourly(){
-		if(this.hourly == null)
-			return false;
-		else
-			return true;
+		return this.hourly != null;
 	}
 
 	/**
@@ -492,10 +478,7 @@ public class ForecastIO {
 	 * @return true or false
 	 */
 	public boolean hasDaily(){
-		if(this.daily == null)
-			return false;
-		else
-			return true;
+		return this.daily != null;
 	}
 
 	/**
@@ -503,10 +486,7 @@ public class ForecastIO {
 	 * @return true or false
 	 */
 	public boolean hasFlags(){
-		if(this.flags == null)
-			return false;
-		else
-			return true;
+		return this.flags != null;
 	}
 
 	/**
@@ -514,10 +494,7 @@ public class ForecastIO {
 	 * @return true or false
 	 */
 	public boolean hasAlerts(){
-		if(this.alerts == null)
-			return false;
-		else
-			return true;
+		return this.alerts != null;
 	}
 
 	private String urlBuilder(String LATITUDE, String LONGITUDE){
@@ -542,8 +519,7 @@ public class ForecastIO {
 	 * @return True if successful
 	 */
 	public boolean update(){
-		boolean b = getForecast(String.valueOf(getLatitude()), String.valueOf(getLongitude()));
-		return b;
+		return getForecast(String.valueOf(getLatitude()), String.valueOf(getLongitude()));
 	}
 
 	/**
@@ -553,8 +529,6 @@ public class ForecastIO {
 	 * @return True if successful 
 	 */
 	public boolean getForecast(String LATITUDE, String LONGITUDE) {
-
-
 		try {
 			String reply = httpGET( urlBuilder(LATITUDE, LONGITUDE) );
 			if(reply == null)
@@ -704,20 +678,16 @@ public class ForecastIO {
 		try {
 			request = new URL(requestURL);
 			// check, if a proxy was defined, if so, use it for the connection
-			if (this.proxy_to_use != null) {
-				connection = (HttpURLConnection) request.openConnection(this.proxy_to_use);
-			}
-			else {
-				connection = (HttpURLConnection) request.openConnection();
-			}
+			connection = this.proxy_to_use != null ? (HttpURLConnection) request.openConnection(this.proxy_to_use): 
+				(HttpURLConnection) request.openConnection();
 			
 			connection.setRequestMethod("GET");
 			connection.setUseCaches(false);
 			connection.setDoInput(true);
 			connection.setDoOutput(false);
 			connection.setRequestProperty("Accept-Encoding", "gzip, deflate");
-            connection.setConnectTimeout(connectTimeout);
-            connection.setReadTimeout(readTimeout);
+	        	connection.setConnectTimeout(connectTimeout);
+        	    	connection.setReadTimeout(readTimeout);
 			connection.connect();
 
 			Cache_Control = connection.getHeaderField("Cache-Control");
